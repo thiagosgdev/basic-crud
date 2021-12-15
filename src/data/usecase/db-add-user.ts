@@ -9,7 +9,7 @@ export class DbAddUser implements AddUserRepository {
         private readonly addUserRepository: AddUserRepository
     ){}
     async add(data: AddUserParams): Promise<UserModel> {
-        await this.addUserRepository.add(data);
-        return null
+        const user = await this.addUserRepository.add(data);
+        return user;
     }
 }
