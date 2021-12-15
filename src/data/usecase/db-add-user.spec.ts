@@ -61,4 +61,10 @@ describe("Db Add User", () => {
         await sut.add(mockAddUserParams());
         expect(addSpy).toHaveBeenCalledWith(mockAddUserParams());
     });
+
+    test("Should return the user on AddUserRepository success", async () => {
+        const { sut } = makeSut();
+        const user = await sut.add(mockAddUserParams());
+        expect(user).toHaveProperty("id");
+    });
 });
