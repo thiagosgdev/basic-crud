@@ -74,4 +74,11 @@ describe("Db Add User", () => {
         const user = await sut.add(mockAddUserParams());
         expect(user).toBeNull();
     });
+
+    test("Should throw if AddUserRepository throws", async () => {
+        const { sut, addUserStub} = makeSut();
+        jest.spyOn(addUserStub, "add").mockReturnValueOnce(Promise.reject(new Error()));
+        const user = sut.add(mockAddUserParams());
+        await expect(user).rejects.toThrow();
+    });
 });
