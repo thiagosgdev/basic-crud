@@ -10,6 +10,9 @@ export class DbAddUser implements AddUserRepository {
     ){}
     async add(data: AddUserParams): Promise<UserModel> {
         const user = await this.addUserRepository.add(data);
-        return user;
+        if(user){
+            return user;
+        }
+        return null
     }
 }
