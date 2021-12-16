@@ -59,6 +59,12 @@ describe("Update User Controller", () => {
             birthdate: new Date, 
             cellphone: 123445678,
             email: "another_email@mail.com",
-        })
+        });
+    });
+
+    test("Should return 200 on UpdateUser success", async () => {
+        const { sut } = makeSut();
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(200);
     })
 })
