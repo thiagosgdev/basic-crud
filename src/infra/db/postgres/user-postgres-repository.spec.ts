@@ -129,4 +129,11 @@ describe("User Postgres Repository", () => {
         const user = await sut.find(111111111)
         expect(user).toBeNull();
     });
+
+    test("Should throw if delete() throws", async () => {
+        const { sut } = makeSut();
+        jest.spyOn(sut, "delete").mockReturnValueOnce(Promise.reject(new Error()))
+        const promise = sut.delete(111111111);
+        await expect(promise).rejects.toThrow()
+    });
 });
