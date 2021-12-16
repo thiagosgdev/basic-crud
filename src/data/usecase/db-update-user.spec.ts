@@ -54,9 +54,16 @@ describe(" Db Update User", () => {
         expect(updateSpy).toHaveBeenCalledWith(mockUpdateUserParams());
     });
 
-    test("Should the updated user on UpdateUserRepository success", async () => {
+    test("Should return the updated user on UpdateUserRepository success", async () => {
         const { sut } = makeSut();
         const user = await sut.update(mockUpdateUserParams())
         expect(user).toHaveProperty("id");
+    });
+
+    test("Should return null on UpdateUserRepository fail", async () => {
+        const { sut, updateUserStub } = makeSut();
+        jest.spyOn(updateUserStub, "update").mockReturnValueOnce(Promise.resolve(null));
+        const user = await sut.update(mockUpdateUserParams());
+        expect(user).toBeNull()
     });
 });
