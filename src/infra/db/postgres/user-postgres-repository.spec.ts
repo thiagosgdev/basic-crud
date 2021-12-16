@@ -121,4 +121,12 @@ describe("User Postgres Repository", () => {
         const user = sut.update(mockUpdateUserParams());
         await expect(user).rejects.toThrow();
     });
+
+    test("Should delete the user on delete() success", async () => {
+        const { sut } = makeSut();
+        await sut.add(mockAddUserParams());
+        await sut.delete(111111111);
+        const user = await sut.find(111111111)
+        expect(user).toBeNull();
+    });
 });
