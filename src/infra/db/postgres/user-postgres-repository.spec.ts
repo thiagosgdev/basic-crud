@@ -28,5 +28,12 @@ describe("User Postgres Repository", () => {
         const { sut } = makeSut();
         const user = await sut.add(mockAddUserParams());
         expect(user).toHaveProperty("id");
-    })
+    });
+
+    test("Should return null on add() fail", async () => {
+        const { sut } = makeSut();
+        jest.spyOn(sut, "add").mockReturnValueOnce(Promise.resolve(null));
+        const user = await sut.add(mockAddUserParams());
+        expect(user).toBeNull()
+    });
 });
