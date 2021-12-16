@@ -34,5 +34,11 @@ describe("Db Find User", () => {
         const findSpy = jest.spyOn(findUserStub, "find");
         await sut.find(cpf, name);
         expect(findSpy).toHaveBeenCalledWith(cpf, name);
-    })
-})
+    });
+
+    test("Should return the user on FindUserRepository success", async () => {
+        const { sut } = makeSut();
+        const user = await sut.find(cpf, name);
+        expect(user).toHaveProperty("id");
+    });
+});
