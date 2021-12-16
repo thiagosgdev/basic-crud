@@ -8,17 +8,25 @@ export class AddUserController implements Controller {
     ){}
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const  data: AddUserParams  = httpRequest.body;
-        const user = await this.addUser.add(data);
-        if(user){
+        try {
+            const  data: AddUserParams  = httpRequest.body;
+            const user = await this.addUser.add(data);
+            if(user){
+                return {
+                    statusCode: 201,
+                    body: user
+                }
+            }
             return {
-                statusCode: 201,
-                body: user
+                statusCode: 200,
+                body: "ERROR ADD USER - Check the values informed!"
+            }
+        }catch(error){
+            return {
+                statusCode: 500,
+                body: "Internal Server Error! Contact the admin!"
             }
         }
-        return {
-            statusCode: 200,
-            body: "ERROR ADD USER - Check the values informed!"
-        }
+        
     }
 }
