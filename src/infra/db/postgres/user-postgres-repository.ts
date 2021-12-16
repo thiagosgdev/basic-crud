@@ -30,10 +30,15 @@ export class UserPostgresRepository implements AddUser, ListUsers, FindUser{
     }
 
     async find(cpf: number, name?: string): Promise<UserModel> {
-        if(name){
-            const user = await this.repository.findOne({cpf, name})
+        let user: UserModel;
+        if(!name){
+            user = await this.repository.findOne({cpf})
+        }else {
+            user = await this.repository.findOne({cpf, name})
         }
-        const user = await this.repository.findOne({cpf})
-        return user;
+        if(user){
+            return user;
+        }
+        return null;        
     }
 }
