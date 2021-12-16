@@ -114,4 +114,11 @@ describe("User Postgres Repository", () => {
         const user = await sut.update(mockUpdateUserParams());
         expect(user.email).toBe("another_email@mail.com");
     });
+
+    test("Should throw if update() throws", async () => {
+        const { sut } = makeSut();
+        jest.spyOn(sut, "update").mockReturnValueOnce(Promise.reject(new Error()));
+        const user = sut.update(mockUpdateUserParams());
+        await expect(user).rejects.toThrow();
+    });
 });
