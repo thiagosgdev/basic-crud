@@ -6,7 +6,7 @@ import { FindUserController } from "./find-user-controller";
 
 
 const makeFakeRequest = (): HttpRequest => ({
-    body: {
+    params: {
         cpf: 1111111,
         name: "any_name"
     }

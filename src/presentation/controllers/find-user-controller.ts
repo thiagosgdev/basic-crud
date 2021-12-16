@@ -10,7 +10,7 @@ export class FindUserController implements Controller {
     
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         try {
-            const {cpf, name } = httpRequest.body;
+            const {cpf, name } = httpRequest.params;
             const user = await this.findUser.find(cpf, name);
             if(user){
                 return {
