@@ -43,4 +43,11 @@ describe("Db List Users", () => {
         expect(users.length).toBe(2);
     });
 
+    test("Should return null on ListUsersRepository fail", async () => {
+        const { sut, listUsersStub} = makeSut();
+        jest.spyOn(listUsersStub, "list").mockReturnValueOnce(Promise.resolve([]));
+        const users = await sut.list();
+        expect(users).toBeNull();
+    });
+
 });
