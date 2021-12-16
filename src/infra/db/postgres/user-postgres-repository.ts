@@ -13,6 +13,9 @@ export class UserPostgresRepository implements AddUser {
     async add(data: AddUserParams):Promise<UserModel> {
         const user = this.repository.create(data);
         await this.repository.save(user);
-        return user;
+        if(user){
+            return user;
+        }
+        return null;
     }
 }
