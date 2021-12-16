@@ -10,6 +10,9 @@ export class DbUpdateUser implements UpdateUserRepository {
 
     async update(data: UpdateUserParams): Promise<UserModel>{
         const user = await this.updateUserRepository.update(data);
-        return user;
+        if(user){
+            return user;
+        }
+        return null;
     }
 }
