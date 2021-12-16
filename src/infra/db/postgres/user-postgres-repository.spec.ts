@@ -107,4 +107,11 @@ describe("User Postgres Repository", () => {
         const user = await sut.update(mockUpdateUserParams());
         expect(user).toBeNull();
     });
+
+    test("Should return the updatedUser on update() success", async () => {
+        const { sut } = makeSut();
+        await sut.add(mockAddUserParams());
+        const user = await sut.update(mockUpdateUserParams());
+        expect(user.email).toBe("another_email@mail.com");
+    });
 });
