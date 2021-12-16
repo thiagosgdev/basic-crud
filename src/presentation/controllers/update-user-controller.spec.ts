@@ -66,5 +66,12 @@ describe("Update User Controller", () => {
         const { sut } = makeSut();
         const response = await sut.handle(makeFakeRequest());
         expect(response.statusCode).toBe(200);
-    })
+    });
+
+    test("Should return 204 on UpdateUser fail", async () => {
+        const { sut, updateUserStub } = makeSut();
+        jest.spyOn(updateUserStub, "update").mockReturnValueOnce(Promise.resolve(null));
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(204);
+    });
 })
