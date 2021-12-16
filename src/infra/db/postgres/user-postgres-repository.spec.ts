@@ -61,7 +61,15 @@ describe("User Postgres Repository", () => {
 
     test("Should return null on list() fail", async () => {
         const { sut } = makeSut();
+        jest.spyOn(sut, "list").mockReturnValueOnce(Promise.resolve(null));
         const users = await sut.list();
         expect(users).toBeNull();
+    });
+
+    test("Should throw if list() throws", async () => {
+        const { sut } = makeSut();
+        jest.spyOn(sut, "list").mockReturnValueOnce(Promise.reject(new Error()));
+        const user = sut.list();
+        await expect(user).rejects.toThrow();
     });
 });
