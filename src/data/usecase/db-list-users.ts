@@ -12,5 +12,6 @@ export class DbListUsers implements ListUsersRepository {
         if(users.length > 0){
             return users;
         }
+        return null;
     }
 }
