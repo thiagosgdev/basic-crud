@@ -9,17 +9,25 @@ export class UpdateUserController implements Controller {
     ){}
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const data: UpdateUserParams = httpRequest.body;
-        const updatedUser = await this.updateUser.update(data);
-        if(updatedUser){
+        try{
+            const data: UpdateUserParams = httpRequest.body;
+            const updatedUser = await this.updateUser.update(data);
+            if(updatedUser){
+                return {
+                    statusCode: 200,
+                    body: updatedUser
+                }
+            }
             return {
-                statusCode: 200,
-                body: updatedUser
+                statusCode: 204,
+                body: "Check the user information!"
+            }
+        }catch(error){
+            return {
+                statusCode: 500,
+                body: "Server internal error!"
             }
         }
-        return {
-            statusCode: 204,
-            body: "Check the user information!"
-        }
+        
     }
 }
