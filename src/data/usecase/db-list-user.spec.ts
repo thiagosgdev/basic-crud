@@ -50,4 +50,11 @@ describe("Db List Users", () => {
         expect(users).toBeNull();
     });
 
+    test("Should throw if ListUsersRepository throws", async () => {
+        const { sut, listUsersStub} = makeSut();
+        jest.spyOn(listUsersStub, "list").mockReturnValueOnce(Promise.reject(new Error()));
+        const users = sut.list();
+        await expect(users).rejects.toThrow();
+    });
+
 });
