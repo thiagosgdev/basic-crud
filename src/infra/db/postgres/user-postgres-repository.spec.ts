@@ -19,6 +19,11 @@ describe("User Postgres Repository", () => {
     beforeEach(async () => {
         await connection.clear();
     });
+
+    afterEach(async () => {
+        await connection.clear();
+    });
+
     afterAll(async () => {
         await connection.clear();
         await connection.close();
@@ -52,5 +57,11 @@ describe("User Postgres Repository", () => {
         expect(users.length).toBe(2);
         expect(users[0]).toHaveProperty("id");
         expect(users[1]).toHaveProperty("id");
+    });
+
+    test("Should return null on list() fail", async () => {
+        const { sut } = makeSut();
+        const users = await sut.list();
+        expect(users).toBeNull();
     });
 });
