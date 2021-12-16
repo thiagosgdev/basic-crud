@@ -44,5 +44,11 @@ describe("Find User Controller", () => {
             1111111,
             "any_name"
         );
-    })
-})
+    });
+
+    test("Should return 200 on FindUser success", async () => {
+        const { sut } = makeSut();
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(200);
+    });
+});
