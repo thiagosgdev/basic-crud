@@ -94,4 +94,11 @@ describe("User Postgres Repository", () => {
         const user = await sut.find(cpf);
         expect(user).toHaveProperty("id");
     });
+
+    test("Should throw if find() throws", async () => {
+        const { sut } = makeSut();
+        jest.spyOn(sut, "find").mockReturnValueOnce(Promise.reject(new Error()));
+        const user = sut.find(cpf, name);
+        await expect(user).rejects.toThrow();
+    });
 });
