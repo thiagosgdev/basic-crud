@@ -10,6 +10,9 @@ export class DbFindUser implements FindUserRepository {
 
     async find(cpf: number, name?: string): Promise<UserModel> {
         const user =await this.findUserRepository.find(cpf, name);
-        return user;
+        if(user) {
+            return user;
+        }
+        return null;
     }
 }
