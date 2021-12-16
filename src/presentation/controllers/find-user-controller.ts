@@ -11,9 +11,16 @@ export class FindUserController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         const {cpf, name } = httpRequest.body;
         const user = await this.findUser.find(cpf, name);
+        if(user){
+            return {
+                statusCode: 200,
+                body: user
+            };
+        }
         return {
-            statusCode: 200,
-            body: user
+            statusCode: 204,
+            body: "Verify the cpf and/or name"
         };
+        
     }
 }
