@@ -10,16 +10,26 @@ export class ListUsersController implements Controller {
     ){}
 
     async handle(): Promise<HttpResponse> {
-        const users = await this.listUsers.list();
-        if(users.length > 0){
+        try {
+            const users = await this.listUsers.list();
+            if(users.length > 0){
+                return {
+                    statusCode: 200,
+                    body: users
+                };
+            }
             return {
-                statusCode: 200,
-                body: users
-            };
+                statusCode: 204,
+                body: "No data found!"
+            }
+        }catch(error){
+            return {
+                statusCode: 500,
+                body: {
+                    message: "Internal Server Error!"
+                }
+            }
         }
-        return {
-            statusCode: 204,
-            body: "No data found!"
-        }
+
     }
 }
