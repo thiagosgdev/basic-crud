@@ -51,4 +51,11 @@ describe("Find User Controller", () => {
         const response = await sut.handle(makeFakeRequest());
         expect(response.statusCode).toBe(200);
     });
+
+    test("Should return 204 on FindUser fail", async () => {
+        const { sut, findUserStub } = makeSut();
+        jest.spyOn(findUserStub, "find").mockReturnValueOnce(Promise.resolve(null));
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(204);
+    });
 });
