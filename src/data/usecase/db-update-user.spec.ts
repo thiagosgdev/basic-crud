@@ -52,5 +52,11 @@ describe(" Db Update User", () => {
         const updateSpy = jest.spyOn(updateUserStub, "update");
         await sut.update(mockUpdateUserParams())
         expect(updateSpy).toHaveBeenCalledWith(mockUpdateUserParams());
-    })
+    });
+
+    test("Should the updated user on UpdateUserRepository success", async () => {
+        const { sut } = makeSut();
+        const user = await sut.update(mockUpdateUserParams())
+        expect(user).toHaveProperty("id");
+    });
 });
