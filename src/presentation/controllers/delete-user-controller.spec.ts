@@ -1,4 +1,5 @@
 import { DeleteUser } from "@/domain/usecase/user/delete-user"
+import { response } from "express";
 import { HttpRequest } from "../protocols";
 import { DeleteUserController } from "./delete-user-controller";
 
@@ -37,5 +38,11 @@ describe("Delete User Controller", () => {
         const deleteSpy = jest.spyOn(deleteUserStub, "delete");
         await sut.handle(makeFakeRequest());
         expect(deleteSpy).toHaveBeenCalledWith(1111111)
-    })
-})
+    });
+
+    test("Should return 200 on DeleteUser response", async () => {
+        const { sut } = makeSut();
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(200);
+    });
+});
