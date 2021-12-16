@@ -16,6 +16,9 @@ export class AddUserController implements Controller {
                 body: user
             }
         }
-        return null;
+        return {
+            statusCode: 200,
+            body: "ERROR ADD USER - Check the values informed!"
+        }
     }
 }
