@@ -75,10 +75,17 @@ describe("User Postgres Repository", () => {
         await expect(user).rejects.toThrow();
     });
 
-    test("Should return the user on find() success", async () => {
+    test("Should return the user on find(cpf, name) success", async () => {
         const { sut } = makeSut();
         await sut.add(mockAddUserParams());
         const user = await sut.find(cpf, name);
+        expect(user).toHaveProperty("id");
+    });
+
+    test("Should return the user on find(cpf) success", async () => {
+        const { sut } = makeSut();
+        await sut.add(mockAddUserParams());
+        const user = await sut.find(cpf);
         expect(user).toHaveProperty("id");
     });
 });
