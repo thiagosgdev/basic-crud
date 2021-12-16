@@ -67,4 +67,11 @@ describe(" Add User Controller ", () => {
         const response = await sut.handle(makeFakeRequest());
         expect(response.statusCode).toBe(200);
     });
+
+    test("Should return 500 if AddUser throws", async () => {
+        const { sut, addUserStub } = makeSut();
+        jest.spyOn(addUserStub, "add").mockReturnValueOnce(Promise.reject(new Error()));
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(500);
+    });
 });
