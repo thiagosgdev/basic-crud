@@ -9,6 +9,8 @@ const makeSut = () => {
     }
 }
 
+const { cpf, name } = mockAddUserParams();
+
 describe("User Postgres Repository", () => {
     
     beforeAll(async () => {
@@ -71,5 +73,12 @@ describe("User Postgres Repository", () => {
         jest.spyOn(sut, "list").mockReturnValueOnce(Promise.reject(new Error()));
         const user = sut.list();
         await expect(user).rejects.toThrow();
+    });
+
+    test("Should return the user on find() success", async () => {
+        const { sut } = makeSut();
+        await sut.add(mockAddUserParams());
+        const user = await sut.find(cpf, name);
+        expect(user).toHaveProperty("id");
     });
 });
