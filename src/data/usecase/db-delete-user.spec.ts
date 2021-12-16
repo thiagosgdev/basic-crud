@@ -32,4 +32,11 @@ describe("Db Delete User", () => {
         await sut.delete(1111111);
         expect(deleteSpy).toHaveBeenCalledWith(1111111);
     });
+
+    test("Should throw if DeleteUserRepository throws", async () => {
+        const { sut, deleteUserStub } = makeSut();
+        jest.spyOn(deleteUserStub, "delete").mockReturnValueOnce(Promise.reject(new Error()));
+        const promise = sut.delete(1111111);
+        await expect(promise).rejects.toThrow();
+    });
 });
