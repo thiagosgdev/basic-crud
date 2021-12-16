@@ -50,5 +50,7 @@ export class UserPostgresRepository implements AddUser, ListUsers, FindUser, Upd
         if(!user){
             return null;
         }
+        const updatedUser = await this.repository.save({...user, ...data});
+        return updatedUser;
     }
 }
