@@ -18,7 +18,7 @@
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "test": "jest --passWithNoTests --silent --noStackTrace  --runInBand",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only  --ignore-watch node_modules --respawn src/main/server.ts"
-},
+  },
   "dependencies": {
     "express": "^4.17.1",
     "pg": "^8.7.1",
@@ -26,6 +26,7 @@
     "ts-jest": "^27.1.1",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
-    "typeorm": "^0.2.41"
+    "typeorm": "^0.2.41",
+    "uuid": "^8.3.2"
   }
 }
