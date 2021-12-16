@@ -10,7 +10,12 @@ export class UpdateUserController implements Controller {
 
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         const data: UpdateUserParams = httpRequest.body;
-        await this.updateUser.update(data);
-        return null
+        const updatedUser = await this.updateUser.update(data);
+        if(updatedUser){
+            return {
+                statusCode: 200,
+                body: updatedUser
+            }
+        }
     }
 }
