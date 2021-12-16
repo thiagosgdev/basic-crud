@@ -25,5 +25,6 @@ export class UserPostgresRepository implements AddUser, ListUsers {
         if(users.length > 0){
             return users;
         }
+        return null;
     }
 }
