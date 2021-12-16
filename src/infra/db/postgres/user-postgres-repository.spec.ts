@@ -43,4 +43,14 @@ describe("User Postgres Repository", () => {
         const user = sut.add(mockAddUserParams());
         await expect(user).rejects.toThrow();
     });
+
+    test("Should return the users on list() success", async () => {
+        const { sut } = makeSut();
+        await sut.add(mockAddUserParams());
+        await sut.add(mockAddUserParams());
+        const users = await sut.list();
+        expect(users.length).toBe(2);
+        expect(users[0]).toHaveProperty("id");
+        expect(users[1]).toHaveProperty("id");
+    });
 });
