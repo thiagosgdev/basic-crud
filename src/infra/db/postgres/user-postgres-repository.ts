@@ -3,11 +3,14 @@ import { UserModel } from "@/domain/models/user";
 import { AddUser, AddUserParams } from "@/domain/usecase/user/add-user";
 import { FindUser } from "@/domain/usecase/user/find-user";
 import { ListUsers } from "@/domain/usecase/user/list-users";
+import { UpdateUser, UpdateUserParams } from "@/domain/usecase/user/update-user";
 import { getRepository, Repository } from "typeorm";
 
 
-export class UserPostgresRepository implements AddUser, ListUsers, FindUser{
+export class UserPostgresRepository implements AddUser, ListUsers, FindUser, UpdateUser{
+   
     private readonly repository: Repository<User>
+    
     constructor(){
         this.repository = getRepository(User);
     }
@@ -40,5 +43,12 @@ export class UserPostgresRepository implements AddUser, ListUsers, FindUser{
             return user;
         }
         return null;        
+    }
+
+    async update(data: UpdateUserParams): Promise<UserModel> {
+        const user = await this.repository.findOne({cpf: data.cpf});
+        if(!user){
+            return null;
+        }
     }
 }
