@@ -54,4 +54,10 @@ describe(" Add User Controller ", () => {
         await sut.handle(makeFakeRequest());
         expect(addSpy).toHaveBeenCalledWith(mockAddUserParams());
     });
+
+    test("Should return 201 on AddUser success", async () => {
+        const { sut } = makeSut();
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(201);
+    });
 });
