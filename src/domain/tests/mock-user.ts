@@ -1,5 +1,6 @@
 import { UserModel } from "../models/user";
 import { AddUserParams } from "../usecase/user/add-user";
+import { UpdateUserParams } from "../usecase/user/update-user";
 
 export const mockAddUserParams = ():AddUserParams => ({
     name: "any_name", 
@@ -42,3 +43,11 @@ export const mockUsersModel = ():UserModel[] => [
         updated_at: new Date,
     }
 ];
+
+export const mockUpdateUserParams = (): UpdateUserParams => ({
+    name: "any_name", 
+    cpf: 111111111, 
+    birthdate: new Date, 
+    cellphone: 123445678,
+    email: "another_email@mail.com",
+});

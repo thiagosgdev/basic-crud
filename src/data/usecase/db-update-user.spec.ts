@@ -1,5 +1,5 @@
 import { UserModel } from "@/domain/models/user";
-import { mockUserModel } from "@/domain/tests/mock-user";
+import { mockUpdateUserParams, mockUserModel } from "@/domain/tests/mock-user";
 import { UpdateUserParams } from "@/domain/usecase/user/update-user";
 import { UpdateUserRepository } from "../protocols/update-user-repository";
 import { DbUpdateUser } from "./db-update-user";
@@ -13,14 +13,6 @@ const mockUpdateUserRepository = (): UpdateUserRepository => {
     }
     return new UpdateUserRepositoryStub();
 }
-
-const mockUpdateUserParams = (): UpdateUserParams => ({
-    name: "any_name", 
-    cpf: 111111111, 
-    birthdate: new Date, 
-    cellphone: 123445678,
-    email: "another_email@mail.com",
-});
 
 type SutTypes = {
     sut: DbUpdateUser,
@@ -37,7 +29,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe(" Db Update User", () => {
-
 
     beforeAll(() => {
         MockDate.set(new Date());
