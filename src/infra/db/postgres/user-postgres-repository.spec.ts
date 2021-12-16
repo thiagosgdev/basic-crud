@@ -75,6 +75,12 @@ describe("User Postgres Repository", () => {
         await expect(user).rejects.toThrow();
     });
 
+    test("Should return null on find() fail", async () => {
+        const { sut } = makeSut();
+        const user = await sut.find(cpf, name);
+        expect(user).toBeNull();
+    });
+
     test("Should return the user on find(cpf, name) success", async () => {
         const { sut } = makeSut();
         await sut.add(mockAddUserParams());
