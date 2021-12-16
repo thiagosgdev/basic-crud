@@ -17,5 +17,9 @@ export class UpdateUserController implements Controller {
                 body: updatedUser
             }
         }
+        return {
+            statusCode: 204,
+            body: "Check the user information!"
+        }
     }
 }
