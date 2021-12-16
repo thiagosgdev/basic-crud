@@ -24,7 +24,9 @@ export class AddUserController implements Controller {
         }catch(error){
             return {
                 statusCode: 500,
-                body: "Internal Server Error! Contact the admin!"
+                body: {
+                    message: "Internal Server Error! Contact the admin!"
+                }
             }
         }
         
