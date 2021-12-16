@@ -1,4 +1,4 @@
-import { mockAddUserParams } from "@/domain/tests/mock-user";
+import { mockAddUserParams, mockUpdateUserParams } from "@/domain/tests/mock-user";
 import { connection } from "./helpers/typeorm";
 import { UserPostgresRepository } from "./user-postgres-repository";
 
@@ -100,5 +100,11 @@ describe("User Postgres Repository", () => {
         jest.spyOn(sut, "find").mockReturnValueOnce(Promise.reject(new Error()));
         const user = sut.find(cpf, name);
         await expect(user).rejects.toThrow();
+    });
+
+    test("Should return null if no user is found", async () => {
+        const { sut } = makeSut();
+        const user = await sut.update(mockUpdateUserParams());
+        expect(user).toBeNull();
     });
 });
