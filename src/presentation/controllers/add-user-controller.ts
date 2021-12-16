@@ -10,6 +10,12 @@ export class AddUserController implements Controller {
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
         const  data: AddUserParams  = httpRequest.body;
         const user = await this.addUser.add(data);
+        if(user){
+            return {
+                statusCode: 201,
+                body: user
+            }
+        }
         return null;
     }
 }

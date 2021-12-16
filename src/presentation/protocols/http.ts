@@ -5,6 +5,6 @@ export type HttpRequest = {
 };
 
 export type HttpResponse = {
-    status: number;
+    statusCode: number;
     body: any;
 };
