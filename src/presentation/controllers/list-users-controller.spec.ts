@@ -39,4 +39,11 @@ describe("List Users Controller", () => {
         const response = await sut.handle();
         expect(response.statusCode).toBe(204);
     });
+
+    test("Should return 500 if ListUsers throws", async() => {
+        const { sut, listUsersStub } = makeSut();
+        jest.spyOn(listUsersStub, "list").mockReturnValueOnce(Promise.reject(new Error()));
+        const response = await sut.handle();
+        expect(response.statusCode).toBe(500);
+    });
 })
