@@ -11,9 +11,15 @@ export class ListUsersController implements Controller {
 
     async handle(): Promise<HttpResponse> {
         const users = await this.listUsers.list();
+        if(users.length > 0){
+            return {
+                statusCode: 200,
+                body: users
+            };
+        }
         return {
-            statusCode: 200,
-            body: users
-        };
+            statusCode: 204,
+            body: "No data found!"
+        }
     }
 }
