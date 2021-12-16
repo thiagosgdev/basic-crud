@@ -1,5 +1,4 @@
 import { UserModel } from "@/domain/models/user";
-import { FindUser } from "@/domain/usecase/user/find-user";
 import { FindUserRepository } from "../protocols/find-user-repository";
 
 
