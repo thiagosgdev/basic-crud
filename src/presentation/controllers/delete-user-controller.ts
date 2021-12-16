@@ -9,13 +9,24 @@ export class DeleteUserController implements Controller {
     ){}
     
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const { cpf } = httpRequest.body;
-        await this.deleteUser.delete(cpf);
-        return {
-            statusCode: 200,
-            body: {
-                message: "Request completed"
+        try{
+            const { cpf } = httpRequest.body;
+            await this.deleteUser.delete(cpf);
+            return {
+                statusCode: 200,
+                body: {
+                    message: "Request completed"
+                }
             }
         }
+        catch(error){
+            return {
+                statusCode: 500,
+                body: {
+                    message: "Internal server error!"
+                }
+            }
+        }
+            
     }
 }
