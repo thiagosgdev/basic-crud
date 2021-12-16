@@ -1,13 +1,14 @@
 import { User } from "@/domain/entities/user";
 import { UserModel } from "@/domain/models/user";
 import { AddUser, AddUserParams } from "@/domain/usecase/user/add-user";
+import { DeleteUser } from "@/domain/usecase/user/delete-user";
 import { FindUser } from "@/domain/usecase/user/find-user";
 import { ListUsers } from "@/domain/usecase/user/list-users";
 import { UpdateUser, UpdateUserParams } from "@/domain/usecase/user/update-user";
 import { getRepository, Repository } from "typeorm";
 
 
-export class UserPostgresRepository implements AddUser, ListUsers, FindUser, UpdateUser{
+export class UserPostgresRepository implements AddUser, ListUsers, FindUser, UpdateUser, DeleteUser{
    
     private readonly repository: Repository<User>
     
@@ -52,5 +53,9 @@ export class UserPostgresRepository implements AddUser, ListUsers, FindUser, Upd
         }
         const updatedUser = await this.repository.save({...user, ...data});
         return updatedUser;
+    }
+
+    async delete(cpf: number): Promise<void> {
+        await this.repository.delete({cpf});
     }
 }
