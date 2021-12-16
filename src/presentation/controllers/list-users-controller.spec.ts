@@ -33,4 +33,10 @@ describe("List Users Controller", () => {
         expect(response.statusCode).toBe(200);
     });
 
+    test("Should return 204 on ListUsers fail", async() => {
+        const { sut, listUsersStub } = makeSut();
+        jest.spyOn(listUsersStub, "list").mockReturnValueOnce(Promise.resolve([]));
+        const response = await sut.handle();
+        expect(response.statusCode).toBe(204);
+    });
 })
