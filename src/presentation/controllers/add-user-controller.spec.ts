@@ -5,6 +5,7 @@ import { HttpRequest } from "../protocols";
 import { AddUserController } from "./add-user-controller";
 import MockDate from "mockdate";
 import { Validation } from "../protocols/validation";
+import { MissingParamError } from "../errors/missing-param-error";
 
 const makeFakeRequest = (): HttpRequest => ({
     body : {
@@ -99,5 +100,12 @@ describe(" Add User Controller ", () => {
             cellphone: 123445678,
             email: "any_email@mail.com",
         });
+    });
+
+    test("Should return 400 on Validation fail", async () => {
+        const { sut, validationStub } = makeSut();
+        jest.spyOn(validationStub, "validate").mockReturnValueOnce(new MissingParamError("missing_field"));
+        const response = await sut.handle(makeFakeRequest());
+        expect(response.statusCode).toBe(400);
     });
 });
