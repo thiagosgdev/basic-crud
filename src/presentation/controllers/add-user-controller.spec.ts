@@ -4,6 +4,7 @@ import { AddUser, AddUserParams } from "@/domain/usecase/user/add-user";
 import { HttpRequest } from "../protocols";
 import { AddUserController } from "./add-user-controller";
 import MockDate from "mockdate";
+import { Validation } from "../protocols/validation";
 
 const makeFakeRequest = (): HttpRequest => ({
     body : {
@@ -24,16 +25,28 @@ const mockAddUser = (): AddUser => {
     return new AddUserStub();
 }
 
+const mockValidation = (): Validation => {
+    class ValidationStub implements Validation {
+        validate(input: any): Error{
+            return null;
+        }        
+    }
+    return new ValidationStub
+}
+
 type SutTypes = {
     sut: AddUserController,
-    addUserStub: AddUser
+    addUserStub: AddUser,
+    validationStub: Validation
 }
 
 const makeSut = (): SutTypes => {
     const addUserStub = mockAddUser();
-    const sut = new AddUserController(addUserStub);
+    const validationStub = mockValidation();
+    const sut = new AddUserController(addUserStub, validationStub);
     return {
         addUserStub,
+        validationStub,
         sut
     }
 }
@@ -73,5 +86,18 @@ describe(" Add User Controller ", () => {
         jest.spyOn(addUserStub, "add").mockReturnValueOnce(Promise.reject(new Error()));
         const response = await sut.handle(makeFakeRequest());
         expect(response.statusCode).toBe(500);
+    });
+
+    test("Should call Validation with the correct values", async () => {
+        const { sut, validationStub } = makeSut();
+        const validateSpy = jest.spyOn(validationStub, "validate");
+        await sut.handle(makeFakeRequest());
+        expect(validateSpy).toHaveBeenCalledWith({
+            name: "any_name", 
+            cpf: 111111111, 
+            birthdate: new Date, 
+            cellphone: 123445678,
+            email: "any_email@mail.com",
+        });
     });
 });
