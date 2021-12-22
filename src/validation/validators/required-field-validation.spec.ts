@@ -1,3 +1,4 @@
+import { MissingParamError } from "@/presentation/errors/missing-param-error";
 import { RequiredFieldValidation } from "./required-field-validation";
 
 
@@ -17,5 +18,11 @@ describe("Required Field Validation", () => {
         const { sut } = makeSut();
         const validation = sut.validate({field: "any_name"})
         expect(validation).toBeFalsy();
-    })
+    });
+
+    test('Should return a MissingParamError if validation fails', () => {
+        const { sut } =  makeSut();
+        const error = sut.validate({wrong: "any_name"});
+        expect(error).toEqual(new MissingParamError("field"));
+    });
 });
