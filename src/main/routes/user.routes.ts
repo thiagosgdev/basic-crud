@@ -7,8 +7,7 @@ import { makeListUsersController } from "../factories/controllers/list-users-con
 import { makeUpdateUserController } from "../factories/controllers/update-user-controller-factory";
 
 export default (router: Router): void => {
-    router.get("/users/:cpf", adaptRoute(makeFindUserController()));
-    router.get("/users/:cpf/:name", adaptRoute(makeFindUserController()));
+    router.get("/users/:cpf/:name?", adaptRoute(makeFindUserController()));
     router.post("/users", adaptRoute(makeAddUserController()));
     router.get("/users", adaptRoute(makeListUsersController()));
     router.put("/users", adaptRoute(makeUpdateUserController()));
